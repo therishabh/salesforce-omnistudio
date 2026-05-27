@@ -476,7 +476,7 @@ Less processing = faster.
 
 ---
 
-# Comparison Table
+### Comparison Table
 
 | Feature          | Extract | Turbo Extract |
 | ---------------- | ------: | ------------: |
@@ -490,7 +490,7 @@ Less processing = faster.
 
 ---
 
-# Interview Question
+### Interview Question
 
 **When should you use Turbo Extract instead of Extract?**
 
@@ -499,3 +499,56 @@ Answer:
 > Use Turbo Extract when data retrieval is simple and involves a single object because it avoids transformation and additional processing, resulting in better performance. Use Extract when complex relationships, transformations, or nested JSON structures are required.
 
 ---
+# What is Data Mapper Load (previously DataRaptor Load)?
+
+**Data Mapper Load** is used to **insert, update, or upsert data into Salesforce objects** from JSON input.
+
+Think of it as:
+
+```text
+Input JSON
+      ↓
+Data Mapper Load
+      ↓
+Salesforce Record
+```
+
+Instead of writing Apex:
+
+```apex
+Account acc = new Account();
+acc.Name='ABC Ltd';
+insert acc;
+```
+
+You can do it using low-code configuration.
+
+---
+
+### What operations can Load perform?
+
+- ✅ Insert records
+- ✅ Update records
+- ✅ Upsert records
+- ✅ Multiple object record creation
+- ✅ Parent-child record creation
+- ✅ Field mapping
+- ✅ Conditional mapping
+
+---
+
+### Interview Question
+
+**Q: Why use Data Mapper Load instead of Apex DML?**
+
+Answer:
+
+> Data Mapper Load provides a low-code approach to create, update, or upsert Salesforce records without writing Apex. It reduces custom code, improves maintainability, and integrates easily with OmniScripts and Integration Procedures.
+
+**Q: Can Data Mapper Load create parent-child records?**
+
+Answer:
+
+> Yes. It can create multiple related records and map IDs between parent and child objects.
+
+One important distinction: **Load writes records to Salesforce**, while **Extract/Turbo Extract only read records.**
