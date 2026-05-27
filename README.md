@@ -552,3 +552,53 @@ Answer:
 > Yes. It can create multiple related records and map IDs between parent and child objects.
 
 One important distinction: **Load writes records to Salesforce**, while **Extract/Turbo Extract only read records.**
+
+#### Screenshots: 
+<img width="1434" height="753" alt="Screenshot 2026-05-27 at 2 54 59 PM" src="https://github.com/user-attachments/assets/0ff8ba0f-380a-4983-a4d9-da3feaf2abee" />
+
+
+##### Lookup Field Mapping 
+
+<img width="1434" height="753" alt="Screenshot 2026-05-27 at 3 41 01 PM" src="https://github.com/user-attachments/assets/30bb1266-9ffb-45ca-9998-51f19b078a8e" />
+<img width="1438" height="754" alt="Screenshot 2026-05-27 at 3 41 14 PM" src="https://github.com/user-attachments/assets/907f6d39-85d9-4995-a59b-400bb353216c" />
+
+Ye images **Data Mapper Designer** ki configuration dikhati hain jahan JSON input ko Salesforce-style domain objects me map kiya ja raha hai. Is configuration me ek **Contact record create** ho raha hai aur us contact ko existing **Account** se connect kiya gaya hai.
+
+###### Summary
+
+* Input JSON me Contact related fields diye gaye hain jaise:
+
+  * FirstName
+  * LastName
+  * Email
+  * Phone
+  * Department
+  * MailingAddress
+  * AccountName = `"Google"`
+
+* Mapping screen me JSON fields ko `Contact` object ke fields ke saath map kiya gaya hai.
+
+* Specially `AccountName` ko `Contact.AccountId` field ke saath map kiya gaya hai.
+
+###### Important Configuration
+
+`AccountName → Contact.AccountId`
+
+Yahan direct AccountId pass nahi kiya gaya.
+Instead, **Lookup configuration** use ki gayi hai:
+
+* Lookup Object = `Account`
+* Lookup Field = `Name`
+* Lookup Requested Field = `Id`
+
+###### Flow Samajh
+
+Data Mapper pehle input JSON se `AccountName = Google` lega, phir:
+
+1. `Account` object me search karega jahan `Name = Google`
+2. Us account ka `Id` fetch karega
+3. Wahi `Id` automatically `Contact.AccountId` me set karega
+4. Final result: naya Contact create hoga aur existing Google account se linked hoga.
+
+> JSON input ke basis par automated Contact creation ho raha hai, aur Account relationship manually Id diye bina sirf Account Name ke through lookup mechanism se establish ki gayi hai.
+
