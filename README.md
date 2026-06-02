@@ -1,3 +1,11 @@
+Table of Content : 
+- OmniStudio
+- Data Mapper Extract
+- Data Mapper Turbo Extract
+- Data Mapper Load
+- Data Mapper
+
+
 # OmniStudio
 
 **OmniStudio** is a low-code Salesforce framework used to create guided experiences, integrate systems, transform data, and automate business processes without writing much Apex code.
@@ -499,9 +507,9 @@ Answer:
 > Use Turbo Extract when data retrieval is simple and involves a single object because it avoids transformation and additional processing, resulting in better performance. Use Extract when complex relationships, transformations, or nested JSON structures are required.
 
 ---
-# What is Data Mapper Load (previously DataRaptor Load)?
+# Data Mapper Load
 
-**Data Mapper Load** is used to **insert, update, or upsert data into Salesforce objects** from JSON input.
+**Data Mapper Load (previously DataRaptor Load)** is used to **insert, update, or upsert data into Salesforce objects** from JSON input.
 
 Think of it as:
 
