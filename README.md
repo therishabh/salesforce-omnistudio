@@ -553,7 +553,7 @@ Answer:
 
 One important distinction: **Load writes records to Salesforce**, while **Extract/Turbo Extract only read records.**
 
-#### Screenshots: 
+### Screenshots: 
 <img width="1434" height="753" alt="Screenshot 2026-05-27 at 2 54 59 PM" src="https://github.com/user-attachments/assets/0ff8ba0f-380a-4983-a4d9-da3feaf2abee" />
 
 
@@ -602,3 +602,135 @@ Data Mapper pehle input JSON se `AccountName = Google` lega, phir:
 
 > JSON input ke basis par automated Contact creation ho raha hai, aur Account relationship manually Id diye bina sirf Account Name ke through lookup mechanism se establish ki gayi hai.
 
+#### Parent Child record insert using data mapper
+
+<img width="1438" height="789" alt="Screenshot 2026-05-28 at 3 08 26 PM" src="https://github.com/user-attachments/assets/94d75858-9075-4be3-b48b-9804f71a7b1c" />
+
+Tumne 2 Load Objects banaye hain:
+
+1. `Account`
+2. `Contact`
+
+Aur unke beech relation define kiya hai:
+```text id="y8m7a6"
+Contact.AccountId = Account.Id
+```
+---
+
+##### Data Flow Samjho
+
+Suppose input JSON ye hai:
+
+```json id="c8dbyy"
+{
+  "account": {
+    "name": "TCS"
+  },
+  "contacts": [
+    {
+      "firstName": "Rishabh",
+      "lastName": "Sharma",
+      "email": "r@test.com"
+    },
+    {
+      "firstName": "Aman",
+      "lastName": "Verma",
+      "email": "a@test.com"
+    }
+  ]
+}
+```
+
+Ab Data Mapper internally kya karega:
+
+---
+
+##### STEP 1 → Parent Insert
+
+Sabse pehle:
+
+```text id="ijz83j"
+Account
+```
+
+insert hoga.
+
+Generated Id:
+
+```text id="jqc1n0"
+001XXXXXXXXXXXX
+```
+
+---
+
+##### STEP 2 → Relationship Memory
+
+Ab Data Mapper us inserted Account ka Id memory me store karta hai.
+
+```text id="u8p4rz"
+Account.Id
+```
+
+---
+
+##### STEP 3 → Child Insert
+
+Ab Contact object insert hoga.
+
+Har contact ke liye automatically:
+
+```text id="i1ckd9"
+Contact.AccountId = inserted Account.Id
+```
+
+set kar diya jayega.
+
+Example:
+
+```json id="9dkb0l"
+{
+   "FirstName":"Rishabh",
+   "LastName":"Sharma",
+   "AccountId":"001XXXXXXXXXXXX"
+}
+```
+
+---
+
+##### Tumhare Screenshot Ka Exact Meaning
+
+Ye jo line hai:
+
+```text id="6gbh9z"
+Contact AccountId = 1 Account Id
+```
+
+iska matlab:
+
+| Left Side         | Meaning                                |
+| ----------------- | -------------------------------------- |
+| Contact.AccountId | Child lookup field                     |
+| 1 Account         | Parent object reference                |
+| Id                | Parent inserted record ka generated Id |
+
+Matlab:
+
+```text id="j62qcc"
+Child.AccountId = Parent.Id
+```
+
+---
+
+##### Real Execution Order
+
+Internally execution aise hota hai:
+
+```text id="8b5j8e"
+1. Insert Account
+2. Get Account.Id
+3. Insert Contact 1 with AccountId
+4. Insert Contact 2 with AccountId
+5. Insert Contact 3 with AccountId
+```
+
+---
