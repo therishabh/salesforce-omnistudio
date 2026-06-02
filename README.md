@@ -3,7 +3,7 @@ Table of Content :
 - [Data Mapper Extract](#data-mapper-extract)
 - [Data Mapper Turbo Extract](#data-mapper-turbo-extract)
 - [Data Mapper Load](#data-mapper-load)
-- [Data Mapper](#data-mapper)
+- [Data Mapper Transform](#data-mapper-transform)
 
 
 # OmniStudio
@@ -742,3 +742,164 @@ Internally execution aise hota hai:
 ```
 
 ---
+
+# Data Mapper Transform
+
+-----------
+-------
+------
+-------
+-----
+
+# OmniScript
+
+> OmniScript is a declarative, low-code tool in Salesforce OmniStudio used to create guided, step-by-step user experiences for collecting, validating, displaying, and processing data. It allows businesses to build complex customer journeys without writing large amounts of Apex or custom UI code.
+
+---
+
+### Senior-Level Interview Answer
+
+> OmniScript is the presentation layer of OmniStudio that enables businesses to create dynamic, guided customer journeys using a low-code approach. It collects user input, maintains data in a JSON structure, integrates with Integration Procedures, Data Mappers, Apex, and external APIs, supports conditional rendering and validations, and orchestrates end-to-end business processes without requiring extensive custom development.
+
+## Why was OmniScript introduced?
+
+Before OmniStudio, developers often had to build:
+
+* Visualforce pages
+* Aura Components
+* LWCs
+* Custom Apex Controllers
+
+For every business process.
+
+Example:
+
+Insurance Application
+
+```text
+Step 1 → Personal Details
+Step 2 → Address
+Step 3 → Plan Selection
+Step 4 → Review
+Step 5 → Submit
+```
+
+Developers would create:
+
+```text
+LWC
+↓
+Apex
+↓
+Validation Logic
+↓
+Navigation Logic
+↓
+API Calls
+↓
+Database Operations
+```
+
+A lot of custom development.
+
+OmniScript allows all of this to be configured visually.
+
+---
+
+## OmniScript Architecture
+
+```text
+User
+  ↓
+OmniScript
+  ↓
+Integration Procedure
+  ↓
+Data Mapper
+  ↓
+Salesforce / External Systems
+```
+
+### Responsibilities
+
+| Component             | Responsibility          |
+| --------------------- | ----------------------- |
+| OmniScript            | UI + User Journey       |
+| Integration Procedure | Processing              |
+| Data Mapper           | Data Access             |
+| Salesforce Objects    | Data Storage            |
+| External APIs         | Third-party Integration |
+
+---
+
+## OmniScript Best Practices
+
+### Use Integration Procedures
+
+Bad:
+
+```text
+OmniScript
+   ↓
+5 Data Mapper Calls
+```
+
+Good:
+
+```text
+OmniScript
+   ↓
+1 Integration Procedure
+```
+
+Less server traffic.
+
+---
+
+### Avoid Heavy Logic
+
+Bad:
+
+```text
+Complex business rules inside OmniScript
+```
+
+Good:
+
+```text
+Move rules to:
+
+Decision Matrix
+Expression Set
+Integration Procedure
+```
+
+---
+
+### Reuse Components
+
+Use:
+
+```text
+Reusable OmniScripts
+Reusable FlexCards
+Reusable IPs
+```
+
+---
+
+## OmniScript vs Screen Flow
+
+| Feature               | OmniScript                      | Screen Flow |
+| --------------------- | ------------------------------- | ----------- |
+| Guided Journeys       | ✅                               | Limited     |
+| External Integrations | Excellent                       | Good        |
+| Complex UI            | Excellent                       | Moderate    |
+| Industry Cloud Usage  | Excellent                       | Limited     |
+| Dynamic JSON Handling | Excellent                       | Basic       |
+| Performance           | Better for OmniStudio solutions | Good        |
+
+---
+
+
+
